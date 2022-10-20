@@ -8,6 +8,7 @@
 #include "Video.h"
 #include "Photo.h"
 #include "Post.h"
+#include "Message.h"
 
 int main()
 {
@@ -34,6 +35,11 @@ int main()
     p3.display();
 
     std::cout << "Messages Objects: " << std::endl;
+
+    Message m1("Hello");
+    m1.display();
+    Message m2("Goodbye");
+    m2.display();
 
     //     USocial us;
     //     User *u1 = us.registerUser("Liron");
