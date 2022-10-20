@@ -1,6 +1,7 @@
 #ifndef _POST_H_
 #define _POST_H_
 
+#include <iostream>
 #include <string>
 
 #include "Media.h"

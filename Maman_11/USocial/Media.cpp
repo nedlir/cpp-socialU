@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Media.h"
 
 // display the media on the screen
