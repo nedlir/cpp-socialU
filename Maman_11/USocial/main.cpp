@@ -3,11 +3,38 @@
 #include <exception>
 #include <iostream>
 
+#include "Media.h"
+#include "Audio.h"
+#include "Video.h"
+#include "Photo.h"
+#include "Post.h"
+
 int main()
 {
-    USocial *s = new USocial();
 
-    delete s;
+    std::cout << "Media Objects: " << std::endl;
+
+    Audio a1;
+    Video a2;
+    Photo a3;
+
+    a1.display();
+    a2.display();
+    a3.display();
+
+    std::cout << std::endl;
+    std::cout << "Posts Objects: " << std::endl;
+
+    Post p1("Hello World!");
+    Post p2("Goodbye World!", &a2);
+    Post p3("The fast fox jumped over the lazy dog!", &a3);
+
+    p1.display();
+    p2.display();
+    p3.display();
+
+    std::cout << "Messages Objects: " << std::endl;
+
     //     USocial us;
     //     User *u1 = us.registerUser("Liron");
     //     User *u2 = us.registerUser("Yahav");
