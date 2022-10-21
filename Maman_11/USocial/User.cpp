@@ -1,7 +1,4 @@
 #include "User.h"
-#include <algorithm>
-#include <iostream>
-#include <exception>
 
 User::User()
 {

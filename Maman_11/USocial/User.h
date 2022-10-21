@@ -1,10 +1,14 @@
 #ifndef _USER_H_
 #define _USER_H_
 
+#include <algorithm>
+#include <exception>
+#include <iostream>
+#include <list>
+#include <string>
+
 #include "Post.h"
 #include "Message.h"
-#include <string>
-#include <list>
 #include "USocial.h"
 
 class USocial;

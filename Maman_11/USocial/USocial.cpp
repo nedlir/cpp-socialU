@@ -1,7 +1,7 @@
 #include "USocial.h"
-#include "User.h"
+
 #include "BusinessUser.h"
-#include <iostream>
+#include "User.h"
 
 USocial::USocial()
 {
