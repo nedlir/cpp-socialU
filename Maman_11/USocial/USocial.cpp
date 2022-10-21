@@ -5,7 +5,7 @@
 
 USocial::USocial()
 {
-    user_id = 0;
+    user_id = 1;
 }
 
 USocial::~USocial()
@@ -19,7 +19,8 @@ User *USocial::registerUser(std::string _name, bool _isBusiness)
 {
     if (_name.length() <= 0)
     {
-        throw std::runtime_error("User name is invalid.");
+        std::cout << "Invalid user name: " << _name << std::endl;
+        return nullptr;
     }
 
     User *user;
@@ -29,8 +30,8 @@ User *USocial::registerUser(std::string _name, bool _isBusiness)
         user = new User();
 
     // init user and add to map
-    user_id++;
     user->id = user_id;
+    user_id++;
     user->name = _name;
     user->social_network = this;
     users.insert(std::pair<unsigned long, User *>(user->id, user));
@@ -53,19 +54,19 @@ void USocial::removeUser(User *_user)
     else
     {
         users.erase(_user->id);
-        std::cout << "User " << _user->id << " removed from the network." << std::endl;
+        std::cout << "User " << _user->name << " (" << _user->id << ") removed from the network." << std::endl;
     }
 }
 
 User *USocial::getUserById(unsigned long _id)
 {
-    try
+    if (users.find(_id) == users.end())
+    {
+        std::cout << "User not found in network." << std::endl;
+        return nullptr;
+    }
+    else
     {
         return users.at(_id);
-    }
-    catch (std::out_of_range)
-    {
-        std::cout << "User id: " << _id << " not found." << std::endl;
-        return nullptr;
     }
 }
