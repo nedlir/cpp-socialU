@@ -7,6 +7,8 @@
 #include <list>
 #include "USocial.h"
 
+class USocial;
+
 class User
 {
     friend class USocial;
@@ -17,22 +19,23 @@ protected:
     std::list<unsigned long> friends;
     std::list<Post *> posts;
     std::list<Message *> receivedMessages;
-    USocial *us;
+    USocial *social_network;
 
     User();
     ~User();
 
 public:
-    unsigned long getId();
-    const std::string &getName() const;
-    void addFriend(User *_user);
-    void removeFriend(User *_user);
-    void post(std::string &_text);
-    void post(std::string &_text, Media *_media);
+    unsigned long getId() const;
+    const std::string getName() const;
+    void addFriend(User *);
+    void removeFriend(User *);
+    void post(std::string);
+    void post(std::string, Media *);
+    const std::list<Post *> getPosts() const;
     void viewFriendsPosts() const;
-    void receiveMessage(Message *_message);
-    virtual void sendMessage(User *_user, Message *_message);
-    void viewReceivedMessages();
+    void receiveMessage(Message *);
+    virtual void sendMessage(User *, Message *);
+    void viewReceivedMessages() const;
 };
 
 #endif // _USER_H_

@@ -1,72 +1,76 @@
 #include "User.h"
+#include <algorithm>
+#include <iostream>
+#include <exception>
 
 User::User()
 {
+    id = 0;
 }
 
 User::~User()
 {
-    // for loop delete all new assignments
+    // destroy posts - the only "new" objects the User created
+    for (auto &&post : posts)
+        delete post;
+
+    // also destroy messages - each user holds pointers to his own recieved messages
+    for (auto &&message : receivedMessages)
+        delete message;
 }
 
-inline unsigned long User::getId()
+inline unsigned long User::getId() const
 {
     return id;
 }
 
-inline const std::string User::getName() const
+const inline std::string User::getName() const
 {
-    return &name;
+    return name;
 }
 
-inline void User::addFriend(User *_user)
+void User::addFriend(User *_user)
 {
-    friends.push_back(user->id);
+    friends.push_back(_user->id);
 }
 
-void User::removeFriend(User *user)
+void User::removeFriend(User *_user)
 {
-    auto it = find(friends.begin(), friends.end(), user->id);
-    if (it != friends.end())
+    auto _it = find(friends.begin(), friends.end(), _user->id);
+    if (_it != friends.end())
     {
-        friends.remove(user->id);
+        friends.remove(_user->id);
     }
 }
 
-void User::post(std::string text)
+void User::post(std::string _text)
 {
-    Post *post = new Post(text);
+    Post *post = new Post(_text);
     posts.push_back(post);
 }
 
-void User::post(std::string text, Media *media)
+void User::post(std::string _text, Media *_media)
 {
-    Post *post = new Post(text, media);
-    posts.push_back(post);
+    Post *_post = new Post(_text, _media);
+    posts.push_back(_post);
 }
 
-std::list<Post *> User::getPosts()
+inline const std::list<Post *> User::getPosts() const
 {
     return posts;
 }
 
-void User::viewFriendsPosts()
+void User::viewFriendsPosts() const
 {
     std::cout << name << " viewing posts by friends:" << std::endl;
     for (auto const &friendId : friends)
     {
         try
         {
-            auto myFriend = us->getUserById(friendId);
+            auto myFriend = social_network->getUserById(friendId);
             std::cout << myFriend->name << " posted:" << std::endl;
             for (auto const &post : myFriend->posts)
-            {
-                std::cout << post->getText() << std::endl;
-                if (post->getMedia() != NULL)
-                {
-                    post->getMedia()->display();
-                }
-            }
+                post->display();
         }
         catch (const std::exception &e)
         {
@@ -76,30 +80,22 @@ void User::viewFriendsPosts()
     std::cout << "=============" << std::endl;
 }
 
-inline void User::receiveMessage(Message *_message)
+void User::receiveMessage(Message *_message)
 {
     receivedMessages.push_back(_message);
 }
 
 void User::sendMessage(User *_user, Message *_message)
 {
-    auto it = find(friends.begin(), friends.end(), other->id);
-    if (it != friends.end())
-    {
-        _user->receiveMessage(message);
-    }
+    auto _it = find(friends.begin(), friends.end(), _user->id);
+    if (_it != friends.end())
+        _user->receiveMessage(_message);
     else
-    {
         throw std::runtime_error("You tried sending a message to a user who is not your friend!");
-    }
 }
 
-void User::viewReceivedMessages()
+void User::viewReceivedMessages() const
 {
-    std::cout << name << " viewing recieved messagess:" << std::endl;
     for (auto const &message : receivedMessages)
-    {
-        std::cout << message->getText() << std::endl;
-    }
-    std::cout << "=============" << std::endl;
+        message->display();
 }

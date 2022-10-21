@@ -31,7 +31,7 @@ inline const Media *Post::getMedia() const
 void Post::display() const
 {
 
-    std::cout << "Posting Time: " << posting_time;
+    std::cout << "Time Posted: " << posting_time;
 
     std::cout << "Text: " << text << std::endl;
 

@@ -1,15 +1,15 @@
 #ifndef _USOCIAL_H_
 #define _USOCIAL_H_
 
+#include <iostream>
 #include <map>
-
-#include "User.h"
+#include <string>
 
 class User;
+class BusinessUser;
 
 class USocial
 {
-
 private:
     unsigned long user_id;
     std::map<unsigned long, User *> users;
@@ -21,10 +21,9 @@ public:
     // destructor
     ~USocial();
 
-    // functions
-    User *registerUser(std::string _name, bool _isBusiness);
+    User *registerUser(std::string _name, bool _isBusiness = false);
     void removeUser(User *_user);
-    User *getUserById(unsigned long _user_id);
+    User *getUserById(unsigned long _id);
 };
 
 #endif // _USOCIAL_H_
