@@ -7,15 +7,13 @@ User::User()
 
 User::~User()
 {
+    friends.clear();
+
     for (auto const &_post : posts)
         delete _post;
 
-    posts.clear();
-
     for (auto const &_message : receivedMessages)
         delete _message;
-
-    receivedMessages.clear();
 }
 
 inline unsigned long User::getId() const
@@ -50,11 +48,15 @@ void User::removeFriend(User *_user)
 
 void User::post(std::string _text)
 {
+    encodeUserNameToPost(_text);
+
     posts.push_back(new Post(_text));
 }
 
 void User::post(std::string _text, Media *_media)
 {
+    encodeUserNameToPost(_text);
+
     if (_media != nullptr)
         posts.push_back(new Post(_text, _media));
     else
@@ -107,7 +109,11 @@ bool User::isFriendOf(User *_user) const
     return false;
 }
 
-std::string User::addUserNameToString(const std::string &_origin, const std::string &_text_type)
+// concatenates the name of the user to the post
+void User::encodeUserNameToPost(std::string &_origin)
 {
-    return "HHH";
+    _origin = _origin + "\n";
+
+    _origin = _origin + "Posted by ";
+    _origin = _origin + name;
 }

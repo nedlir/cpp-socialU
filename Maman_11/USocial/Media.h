@@ -11,11 +11,10 @@ protected:
 
     // we don't want anyone to instantiate a media that is not explicitly specified
     Media(){};
-    ~Media(){};
 
 public:
     // functions
-    virtual void display() const;
+    void display() const;
 };
 
 #endif // _MEDIA_H_

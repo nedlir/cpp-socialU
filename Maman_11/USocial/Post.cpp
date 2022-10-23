@@ -16,6 +16,8 @@ Post::Post(const std::string _text, Media *_media)
 
 Post::~Post()
 {
+    if (media != nullptr)
+        delete media;
 }
 
 inline const std::string &Post::getText() const

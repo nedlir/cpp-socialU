@@ -12,7 +12,8 @@ USocial::~USocial()
 {
     for (const auto &user_element : users)
         delete user_element.second;
-    users.clear();
+
+    users.clear(); // deletes all unsigned integers
 }
 
 User *USocial::registerUser(std::string _name, bool _isBusiness)

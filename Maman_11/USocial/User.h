@@ -43,7 +43,7 @@ protected:
 
 private:
     bool isFriendOf(User *_user) const;
-    std::string addUserNameToString(const std::string &_origin, const std::string &_text_type);
+    void encodeUserNameToPost(std::string &_origin);
 };
 
 #endif // _USER_H_
