@@ -39,9 +39,18 @@ void User::addFriend(User *_user)
 void User::removeFriend(User *_user)
 {
     if (isFriendOf(_user))
-        friends.remove(_user->id);
+    {
+        this->friends.remove(_user->id);
+        _user->friends.remove(this->id); // remove this use from the argument user he just unfriended
+    }
+
     else
         std::cout << "User " << _user->name << " (" << _user->id << ") is not in your friends list." << std::endl;
+}
+
+void User::post(std::string _text)
+{
+    posts.push_back(new Post(_text));
 }
 
 void User::post(std::string _text, Media *_media)
@@ -59,22 +68,13 @@ inline const std::list<Post *> User::getPosts() const
 
 void User::viewFriendsPosts() const
 {
-    std::cout << name << " viewing posts by friends:" << std::endl;
-    for (auto const &friendId : friends)
+    User *_friend;
+    for (auto const &_friendId : friends)
     {
-        try
-        {
-            auto myFriend = social_network->getUserById(friendId);
-            std::cout << myFriend->name << " posted:" << std::endl;
-            for (auto const &_post : myFriend->posts)
-                _post->display();
-        }
-        catch (const std::exception &e)
-        {
-            std::cout << "error: " << e.what() << std::endl;
-        }
+        _friend = (User *)(social_network->getUserById(_friendId));
+        for (auto const &_post : _friend->posts)
+            _post->display();
     }
-    std::cout << "=============" << std::endl;
 }
 
 inline void User::receiveMessage(Message *_message)
@@ -105,4 +105,9 @@ bool User::isFriendOf(User *_user) const
 
     // user not found in friends list
     return false;
+}
+
+std::string User::addUserNameToString(const std::string &_origin, const std::string &_text_type)
+{
+    return "HHH";
 }

@@ -22,7 +22,8 @@ public:
     const std::string getName() const;
     void addFriend(User *);
     void removeFriend(User *);
-    void post(std::string _text, Media *_media = nullptr);
+    void post(std::string _text);
+    void post(std::string _text, Media *_media);
     const std::list<Post *> getPosts() const;
     void viewFriendsPosts() const;
     void receiveMessage(Message *);
@@ -42,6 +43,7 @@ protected:
 
 private:
     bool isFriendOf(User *_user) const;
+    std::string addUserNameToString(const std::string &_origin, const std::string &_text_type);
 };
 
 #endif // _USER_H_
