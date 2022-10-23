@@ -2,8 +2,13 @@
 
 Message::Message(const std::string _text)
 {
+
     sent_time = getCurrentTime();
-    text = _text;
+
+    if (_text.empty())
+        text = "Empty Message";
+    else
+        text = _text;
 }
 
 Message::~Message()

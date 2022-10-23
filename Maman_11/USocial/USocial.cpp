@@ -18,26 +18,23 @@ USocial::~USocial()
 
 User *USocial::registerUser(std::string _name, bool _isBusiness)
 {
-    if (_name.length() <= 0)
-    {
-        std::cout << "Invalid user name: " << _name << std::endl;
-        return nullptr;
-    }
+    if (_name.empty()) // invalid name
+        _name = "Anonymous User";
 
-    User *user;
+    User *_user;
     if (_isBusiness)
-        user = new BusinessUser();
+        _user = new BusinessUser();
     else
-        user = new User();
+        _user = new User();
 
     // init user and add to map
-    user->id = user_id;
+    _user->id = user_id;
     user_id++;
-    user->name = _name;
-    user->social_network = this;
-    users.insert(std::pair<unsigned long, User *>(user->id, user));
+    _user->name = _name;
+    _user->social_network = this;
+    users.insert(std::pair<unsigned long, User *>(_user->id, _user));
 
-    return user;
+    return _user;
 }
 
 void USocial::removeUser(User *_user)
@@ -67,7 +64,5 @@ User *USocial::getUserById(unsigned long _id) const
         return nullptr;
     }
     else
-    {
         return users.at(_id);
-    }
 }

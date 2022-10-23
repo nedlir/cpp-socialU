@@ -7,6 +7,7 @@ class BusinessUser : public User
 {
     friend class USocial;
 
+    // functions
     virtual void sendMessage(User *_user, Message *_message);
 };
 

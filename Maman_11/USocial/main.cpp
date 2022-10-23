@@ -24,9 +24,13 @@ int main()
     u3->post("This is awesome!", new Photo());
     u5->addFriend(u1);
     u5->addFriend(u2);
+
     u5->viewFriendsPosts(); // should see only u1, u2 s' posts
+
     u4->sendMessage(u5, new Message("Buy Falafel!"));
+
     u5->viewReceivedMessages();
+
     try
     {
         u3->sendMessage(u5, new Message("All your base are belong to us"));
@@ -35,6 +39,7 @@ int main()
     {
         std::cout << "error: " << e.what() << std::endl;
     }
+
     u5->viewReceivedMessages();
     u3->addFriend(u5);
     u3->sendMessage(u5, new Message("All your base are belong to us"));

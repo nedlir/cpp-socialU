@@ -37,12 +37,12 @@ inline const std::string &User::getName() const
     return name;
 }
 
-void User::addFriend(User *_user)
+void User::addFriend(User *_user) throw()
 {
-    if (isFriendOf(_user))
-        std::cout << "User " << _user->name << " (" << _user->id << ") is already in your friends list." << std::endl;
-    else
+    if (!isFriendOf(_user))
         friends.push_back(_user->id);
+    else
+        throw std::runtime_error("User is already in your friends list.");
 }
 
 void User::removeFriend(User *_user)
@@ -50,7 +50,7 @@ void User::removeFriend(User *_user)
     if (isFriendOf(_user))
     {
         this->friends.remove(_user->id);
-        _user->friends.remove(this->id); // remove this use from the argument user he just unfriended
+        _user->friends.remove(this->id); // remove this user from the argument user he just unfriended
     }
 
     else
@@ -59,6 +59,9 @@ void User::removeFriend(User *_user)
 
 void User::post(std::string _text)
 {
+    if (_text.empty())
+        _text = "Empty Post";
+
     encodeUserNameToPost(_text);
 
     posts.push_back(new Post(_text));
@@ -66,6 +69,10 @@ void User::post(std::string _text)
 
 void User::post(std::string _text, Media *_media)
 {
+
+    if (_text.empty())
+        _text = "Empty Post";
+
     encodeUserNameToPost(_text);
 
     if (_media != nullptr)
@@ -99,8 +106,6 @@ void User::sendMessage(User *_user, Message *_message)
 {
     if (isFriendOf(_user))
         _user->receiveMessage(_message);
-    else
-        throw std::runtime_error("User is not in your friends list.");
 }
 
 void User::viewReceivedMessages() const

@@ -17,19 +17,9 @@ class User
 {
     friend class USocial;
 
-public:
+private:
     // functions
-    unsigned long getId() const;
-    const std::string &getName() const;
-    void addFriend(User *_user);
-    void removeFriend(User *_user);
-    void post(std::string _text);
-    void post(std::string _text, Media *_media);
-    const std::list<Post *> getPosts() const;
-    void viewFriendsPosts() const;
-    void receiveMessage(Message *_message);
-    virtual void sendMessage(User *, Message *);
-    void viewReceivedMessages() const;
+    void encodeUserNameToPost(std::string &_origin);
 
 protected:
     unsigned long id;
@@ -39,15 +29,28 @@ protected:
     std::list<Message *> receivedMessages;
     USocial *social_network;
 
+    // functions
+    bool isFriendOf(User *_user) const;
+
     // constructor
     User();
+
     // destructor
     ~User();
 
-private:
+public:
     // functions
-    bool isFriendOf(User *_user) const;
-    void encodeUserNameToPost(std::string &_origin);
+    unsigned long getId() const;
+    const std::string &getName() const;
+    void addFriend(User *_user) throw();
+    void removeFriend(User *_user);
+    void post(std::string _text);
+    void post(std::string _text, Media *_media);
+    const std::list<Post *> getPosts() const;
+    void viewFriendsPosts() const;
+    void receiveMessage(Message *_message);
+    virtual void sendMessage(User *_user, Message *_message);
+    void viewReceivedMessages() const;
 };
 
 #endif // _USER_H_

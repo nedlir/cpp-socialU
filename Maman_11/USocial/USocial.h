@@ -22,6 +22,7 @@ public:
     // destructor
     ~USocial();
 
+    // functions
     User *registerUser(std::string _name, bool _isBusiness = false);
     void removeUser(User *_user);
     User *getUserById(unsigned long _id) const;
