@@ -7,13 +7,15 @@ User::User()
 
 User::~User()
 {
-    // destroy posts - the only "new" objects the User created
-    for (auto &&post : posts)
-        delete post;
+    for (auto const &_post : posts)
+        delete _post;
 
-    // also destroy messages - each user holds pointers to his own recieved messages
-    for (auto &&message : receivedMessages)
-        delete message;
+    posts.clear();
+
+    for (auto const &_message : receivedMessages)
+        delete _message;
+
+    receivedMessages.clear();
 }
 
 inline unsigned long User::getId() const
@@ -21,35 +23,33 @@ inline unsigned long User::getId() const
     return id;
 }
 
-const inline std::string User::getName() const
+inline const std::string User::getName() const
 {
     return name;
 }
 
 void User::addFriend(User *_user)
 {
-    friends.push_back(_user->id);
+    if (isFriendOf(_user))
+        std::cout << "User " << _user->name << " (" << _user->id << ") is already in your friends list." << std::endl;
+    else
+        friends.push_back(_user->id);
 }
 
 void User::removeFriend(User *_user)
 {
-    auto _it = find(friends.begin(), friends.end(), _user->id);
-    if (_it != friends.end())
-    {
+    if (isFriendOf(_user))
         friends.remove(_user->id);
-    }
-}
-
-void User::post(std::string _text)
-{
-    Post *post = new Post(_text);
-    posts.push_back(post);
+    else
+        std::cout << "User " << _user->name << " (" << _user->id << ") is not in your friends list." << std::endl;
 }
 
 void User::post(std::string _text, Media *_media)
 {
-    Post *_post = new Post(_text, _media);
-    posts.push_back(_post);
+    if (_media != nullptr)
+        posts.push_back(new Post(_text, _media));
+    else
+        posts.push_back(new Post(_text));
 }
 
 inline const std::list<Post *> User::getPosts() const
@@ -66,8 +66,8 @@ void User::viewFriendsPosts() const
         {
             auto myFriend = social_network->getUserById(friendId);
             std::cout << myFriend->name << " posted:" << std::endl;
-            for (auto const &post : myFriend->posts)
-                post->display();
+            for (auto const &_post : myFriend->posts)
+                _post->display();
         }
         catch (const std::exception &e)
         {
@@ -77,22 +77,32 @@ void User::viewFriendsPosts() const
     std::cout << "=============" << std::endl;
 }
 
-void User::receiveMessage(Message *_message)
+inline void User::receiveMessage(Message *_message)
 {
     receivedMessages.push_back(_message);
 }
 
 void User::sendMessage(User *_user, Message *_message)
 {
-    auto _it = find(friends.begin(), friends.end(), _user->id);
-    if (_it != friends.end())
+    if (isFriendOf(_user))
         _user->receiveMessage(_message);
     else
-        throw std::runtime_error("You tried sending a message to a user who is not your friend!");
+        throw std::runtime_error("User is not in your friends list.");
 }
 
 void User::viewReceivedMessages() const
 {
-    for (auto const &message : receivedMessages)
-        message->display();
+    for (auto const &_message : receivedMessages)
+        _message->display();
+}
+
+bool User::isFriendOf(User *_user) const
+{
+    // search for user in friends list
+    for (auto const &_friendId : friends)
+        if (_friendId == _user->getId())
+            return true;
+
+    // user not found in friends list
+    return false;
 }

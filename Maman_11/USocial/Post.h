@@ -8,6 +8,7 @@
 
 class Post
 {
+
 private:
     std::string posting_time;
     std::string text;

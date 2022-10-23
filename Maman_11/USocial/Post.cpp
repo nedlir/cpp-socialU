@@ -39,7 +39,7 @@ void Post::display() const
         media->display();
 }
 
-inline const std::string Post::getCurrentTime()
+const std::string Post::getCurrentTime()
 {
     time_t current_time = time(0);
     return ctime(&current_time);
