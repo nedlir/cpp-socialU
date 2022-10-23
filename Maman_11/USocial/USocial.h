@@ -10,6 +10,7 @@ class BusinessUser;
 
 class USocial
 {
+
 private:
     unsigned long user_id; // this is the id that will be given by the network to new users
     std::map<unsigned long, User *> users;

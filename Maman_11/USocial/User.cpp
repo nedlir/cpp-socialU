@@ -7,11 +7,22 @@ User::User()
 
 User::~User()
 {
+    // remove this user from his friends list
+    User *_friend;
+    for (auto const &_friendId : friends)
+    {
+        _friend = (User *)(social_network->getUserById(_friendId));
+        _friend->removeFriend(this);
+    }
+
+    // remove all other users from this friends list
     friends.clear();
 
+    // delete all user posts
     for (auto const &_post : posts)
         delete _post;
 
+    // delete all received messages
     for (auto const &_message : receivedMessages)
         delete _message;
 }
@@ -113,7 +124,6 @@ bool User::isFriendOf(User *_user) const
 void User::encodeUserNameToPost(std::string &_origin)
 {
     _origin = _origin + "\n";
-
     _origin = _origin + "Posted by ";
     _origin = _origin + name;
 }

@@ -46,6 +46,7 @@ int main()
     us.removeUser(u3);
     us.removeUser(u2);
     us.removeUser(u1);
+
     std::cout << "YAHOO!" << std::endl;
 
     return 0;
