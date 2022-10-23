@@ -10,10 +10,10 @@ USocial::USocial()
 
 USocial::~USocial()
 {
-    for (const auto &user_element : users)
+    for (auto &&user_element : users)
         delete user_element.second;
 
-    users.clear(); // deletes all unsigned integers
+    users.clear(); // deletes all first elements (non-object primitive type)
 }
 
 User *USocial::registerUser(std::string _name, bool _isBusiness)
@@ -59,7 +59,7 @@ void USocial::removeUser(User *_user)
     }
 }
 
-User *USocial::getUserById(unsigned long _id)
+User *USocial::getUserById(unsigned long _id) const
 {
     if (users.find(_id) == users.end())
     {

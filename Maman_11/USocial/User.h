@@ -18,15 +18,16 @@ class User
     friend class USocial;
 
 public:
+    // functions
     unsigned long getId() const;
-    const std::string getName() const;
-    void addFriend(User *);
-    void removeFriend(User *);
+    const std::string &getName() const;
+    void addFriend(User *_user);
+    void removeFriend(User *_user);
     void post(std::string _text);
     void post(std::string _text, Media *_media);
     const std::list<Post *> getPosts() const;
     void viewFriendsPosts() const;
-    void receiveMessage(Message *);
+    void receiveMessage(Message *_message);
     virtual void sendMessage(User *, Message *);
     void viewReceivedMessages() const;
 
@@ -38,10 +39,13 @@ protected:
     std::list<Message *> receivedMessages;
     USocial *social_network;
 
+    // constructor
     User();
+    // destructor
     ~User();
 
 private:
+    // functions
     bool isFriendOf(User *_user) const;
     void encodeUserNameToPost(std::string &_origin);
 };

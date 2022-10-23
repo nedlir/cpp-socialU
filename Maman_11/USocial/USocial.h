@@ -24,7 +24,7 @@ public:
 
     User *registerUser(std::string _name, bool _isBusiness = false);
     void removeUser(User *_user);
-    User *getUserById(unsigned long _id);
+    User *getUserById(unsigned long _id) const;
 };
 
 #endif // _USOCIAL_H_

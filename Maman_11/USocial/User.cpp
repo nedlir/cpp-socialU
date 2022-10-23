@@ -19,11 +19,11 @@ User::~User()
     friends.clear();
 
     // delete all user posts
-    for (auto const &_post : posts)
+    for (auto &_post : posts)
         delete _post;
 
     // delete all received messages
-    for (auto const &_message : receivedMessages)
+    for (auto &_message : receivedMessages)
         delete _message;
 }
 
@@ -32,7 +32,7 @@ inline unsigned long User::getId() const
     return id;
 }
 
-inline const std::string User::getName() const
+inline const std::string &User::getName() const
 {
     return name;
 }
